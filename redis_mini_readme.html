@@ -1,0 +1,191 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E24B4A; --red-light: #FCEBEB; --red-dark: #791F1F;
+    --teal: #1D9E75; --teal-light: #E1F5EE; --teal-dark: #085041;
+    --amber: #BA7517; --amber-light: #FAEEDA; --amber-dark: #633806;
+    --blue: #185FA5; --blue-light: #E6F1FB; --blue-dark: #0C447C;
+    --purple: #534AB7; --purple-light: #EEEDFE; --purple-dark: #3C3489;
+    --gray: #888780; --gray-light: #F1EFE8; --gray-dark: #444441;
+  }
+
+  .page { font-family: 'DM Sans', sans-serif; color: var(--color-text-primary); padding: 2rem 0 3rem; max-width: 680px; }
+
+  .hero { border-left: 3px solid var(--red); padding: 0.75rem 0 0.75rem 1.25rem; margin-bottom: 2rem; }
+  .hero-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; background: var(--red-light); color: var(--red-dark); padding: 3px 10px; border-radius: 4px; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .hero h1 { font-family: 'Instrument Serif', serif; font-size: 38px; font-weight: 400; line-height: 1.1; letter-spacing: -0.5px; }
+  .hero h1 em { font-style: italic; color: var(--red); }
+  .hero-sub { font-size: 14px; color: var(--color-text-secondary); margin-top: 0.5rem; line-height: 1.6; }
+
+  .toc-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 2rem; }
+  .toc-card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 10px 12px; cursor: default; }
+  .toc-card .toc-icon { font-size: 18px; margin-bottom: 4px; color: var(--red); }
+  .toc-card .toc-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); }
+
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ''; flex: 1; height: 0.5px; background: var(--color-border-tertiary); }
+
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 2rem; }
+  .why-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem; background: var(--color-background-primary); }
+  .why-card .why-icon { font-size: 20px; color: var(--teal); margin-bottom: 6px; }
+  .why-card p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+  .why-card strong { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--color-text-primary); }
+
+  .apps-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; font-size: 13px; }
+  .apps-table thead tr { border-bottom: 1.5px solid var(--color-border-tertiary); }
+  .apps-table th { font-size: 11px; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; color: var(--color-text-secondary); text-align: left; padding: 6px 10px; font-weight: 400; }
+  .apps-table td { padding: 10px 10px; vertical-align: top; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .apps-table tr:last-child td { border-bottom: none; }
+  .app-name { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--color-text-primary); background: var(--gray-light); padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+  .app-type-badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 3px; font-weight: 500; white-space: nowrap; }
+  .badge-be { background: var(--blue-light); color: var(--blue-dark); }
+  .badge-fe { background: var(--purple-light); color: var(--purple-dark); }
+  .app-desc { color: var(--color-text-secondary); line-height: 1.5; }
+
+  .commands-section { margin-bottom: 2rem; }
+  .cmd-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .cmd-pill { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px 8px; text-align: center; }
+  .cmd-mono { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--red); display: block; margin-bottom: 4px; }
+  .cmd-desc { font-size: 11px; color: var(--color-text-secondary); }
+
+  .env-block { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.25rem; margin-bottom: 2rem; font-family: 'DM Mono', monospace; font-size: 12.5px; line-height: 1.9; }
+  .env-key { color: var(--teal-dark); }
+  .env-val { color: var(--color-text-secondary); }
+  .env-comment { color: var(--color-text-secondary); font-size: 11px; }
+
+  .steps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 2rem; }
+  .step-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 0.9rem; background: var(--color-background-primary); }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--red); margin-bottom: 6px; }
+  .step-card p { font-size: 12.5px; color: var(--color-text-secondary); line-height: 1.5; }
+  .step-cmd { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--color-text-primary); background: var(--gray-light); padding: 3px 6px; border-radius: 3px; display: inline-block; margin-top: 5px; }
+
+  .extend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 2rem; }
+  .extend-item { border-left: 2px solid var(--color-border-tertiary); padding: 6px 10px; }
+  .extend-item.active { border-left-color: var(--teal); }
+  .extend-item span { font-size: 12.5px; color: var(--color-text-secondary); }
+  .extend-item strong { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+
+  .footer-bar { display: flex; align-items: center; gap: 10px; padding-top: 1rem; border-top: 0.5px solid var(--color-border-tertiary); }
+  .footer-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+  .footer-text { font-size: 12px; color: var(--color-text-secondary); font-style: italic; }
+  .footer-badge { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 10px; background: var(--red-light); color: var(--red-dark); padding: 3px 10px; border-radius: 4px; }
+</style>
+
+<div class="page">
+
+  <div class="hero">
+    <span class="hero-badge">REDIS · NODE.JS · MONOREPO</span>
+    <h1>redis-<em>mini</em></h1>
+    <p class="hero-sub">A developer-focused monorepo that teaches Redis integration through real backend services, shared UI packages, and practical Turborepo tooling.</p>
+  </div>
+
+  <div class="toc-row">
+    <div class="toc-card"><i class="ti ti-server toc-icon" aria-hidden="true"></i><div class="toc-label">2 Backend Apps</div></div>
+    <div class="toc-card"><i class="ti ti-layout toc-icon" aria-hidden="true"></i><div class="toc-label">2 Frontend Apps</div></div>
+    <div class="toc-card"><i class="ti ti-package toc-icon" aria-hidden="true"></i><div class="toc-label">4 Shared Packages</div></div>
+    <div class="toc-card"><i class="ti ti-bolt toc-icon" aria-hidden="true"></i><div class="toc-label">5 Redis Commands</div></div>
+  </div>
+
+  <p class="section-title">Why Redis</p>
+  <div class="why-grid" style="margin-bottom:2rem">
+    <div class="why-card"><i class="ti ti-rocket why-icon" aria-hidden="true"></i><strong>In-memory speed</strong><p>Reads and writes at sub-millisecond latency — ideal for caches, flags, and sessions.</p></div>
+    <div class="why-card"><i class="ti ti-key why-icon" aria-hidden="true"></i><strong>Key/value simplicity</strong><p>Store banners, tokens, or config with a single SET. Retrieve instantly with GET.</p></div>
+    <div class="why-card"><i class="ti ti-activity why-icon" aria-hidden="true"></i><strong>Health visibility</strong><p>PING lets services report Redis availability alongside their primary database.</p></div>
+  </div>
+
+  <p class="section-title">Apps in this repo</p>
+  <table class="apps-table">
+    <thead>
+      <tr>
+        <th>App</th>
+        <th>Type</th>
+        <th>Stack</th>
+        <th>What it shows</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="app-name">simple-start</span></td>
+        <td><span class="app-type-badge badge-be">Backend</span></td>
+        <td class="app-desc">Express + ioredis + MongoDB</td>
+        <td class="app-desc">Redis health endpoint alongside a Mongo health endpoint — shows multi-DB integration patterns.</td>
+      </tr>
+      <tr>
+        <td><span class="app-name">site-banner</span></td>
+        <td><span class="app-type-badge badge-be">Backend</span></td>
+        <td class="app-desc">Express + ioredis</td>
+        <td class="app-desc">Pure Redis demo — SET, GET, DEL, and EXISTS for a feature-store banner key.</td>
+      </tr>
+      <tr>
+        <td><span class="app-name">web</span></td>
+        <td><span class="app-type-badge badge-fe">Frontend</span></td>
+        <td class="app-desc">Next.js + packages/ui</td>
+        <td class="app-desc">How a front-end app consumes shared workspace components in a Redis-powered monorepo.</td>
+      </tr>
+      <tr>
+        <td><span class="app-name">docs</span></td>
+        <td><span class="app-type-badge badge-fe">Frontend</span></td>
+        <td class="app-desc">Next.js</td>
+        <td class="app-desc">Placeholder docs site — shows how multiple web apps coexist in one workspace.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="section-title">Shared packages</p>
+  <table class="apps-table" style="margin-bottom:2rem">
+    <thead><tr><th>Package</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><span class="app-name">config</span></td><td class="app-desc">Shared configuration utilities used across all apps.</td></tr>
+      <tr><td><span class="app-name">eslint-config</span></td><td class="app-desc">Consistent linting rules for the entire workspace.</td></tr>
+      <tr><td><span class="app-name">typescript-config</span></td><td class="app-desc">Unified TypeScript settings to keep types in sync.</td></tr>
+      <tr><td><span class="app-name">ui</span></td><td class="app-desc">Shared React components consumed by <code>web</code> and <code>docs</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="section-title">Redis commands used</p>
+  <div class="cmd-row" style="margin-bottom:2rem">
+    <div class="cmd-pill"><span class="cmd-mono">PING</span><span class="cmd-desc">Health check</span></div>
+    <div class="cmd-pill"><span class="cmd-mono">SET</span><span class="cmd-desc">Store a value</span></div>
+    <div class="cmd-pill"><span class="cmd-mono">GET</span><span class="cmd-desc">Read a value</span></div>
+    <div class="cmd-pill"><span class="cmd-mono">DEL</span><span class="cmd-desc">Remove a key</span></div>
+    <div class="cmd-pill"><span class="cmd-mono">EXISTS</span><span class="cmd-desc">Check presence</span></div>
+  </div>
+
+  <p class="section-title">Environment configuration</p>
+  <div class="env-block">
+    <span class="env-comment"># .env — local development defaults</span><br>
+    <span class="env-key">PORT</span>=<span class="env-val">5001</span><br>
+    <span class="env-key">REDIS_URL</span>=<span class="env-val">redis://localhost:6379</span><br>
+    <span class="env-key">DATABASE_URL</span>=<span class="env-val">mongodb://localhost:27017/redis-mini-db</span><br>
+    <span class="env-key">BANNER_KEY</span>=<span class="env-val">app:banner</span>
+  </div>
+
+  <p class="section-title">Getting started</p>
+  <div class="steps-row" style="margin-bottom:2rem">
+    <div class="step-card"><div class="step-num">01 / prerequisites</div><p>Node.js 18+, pnpm, Redis on <code>localhost:6379</code>, optional MongoDB.</p></div>
+    <div class="step-card"><div class="step-num">02 / install</div><p>Install all workspace dependencies in one command.</p><span class="step-cmd">pnpm install</span></div>
+    <div class="step-card"><div class="step-num">03 / run a service</div><p>Use Turborepo filters to run any single app in isolation.</p><span class="step-cmd">pnpm dev --filter site-banner</span></div>
+    <div class="step-card"><div class="step-num">04 / build</div><p>Compile all apps for production in a single pass.</p><span class="step-cmd">pnpm build</span></div>
+  </div>
+
+  <p class="section-title">How to extend</p>
+  <div class="extend-grid" style="margin-bottom:2rem">
+    <div class="extend-item active"><strong>Caching</strong><span>Cache API responses with TTL-based expiry.</span></div>
+    <div class="extend-item active"><strong>Sessions</strong><span>Store and validate user sessions in Redis.</span></div>
+    <div class="extend-item active"><strong>Rate limiting</strong><span>Throttle requests using INCR + EXPIRE.</span></div>
+    <div class="extend-item"><strong>Pub/Sub</strong><span>Pass messages between services in real time.</span></div>
+    <div class="extend-item"><strong>Streams</strong><span>Build event-driven pipelines with Redis Streams.</span></div>
+    <div class="extend-item"><strong>Hashes &amp; Lists</strong><span>Model richer data with Redis data structures.</span></div>
+  </div>
+
+  <div class="footer-bar">
+    <div class="footer-dot"></div>
+    <span class="footer-text">Add new apps in <code>apps/</code>, shared helpers in <code>packages/</code>, keep logic isolated per service.</span>
+    <span class="footer-badge">HAPPY LEARNING</span>
+  </div>
+
+</div>

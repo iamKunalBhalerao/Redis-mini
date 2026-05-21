@@ -1,159 +1,153 @@
-# Turborepo starter
+# redis-*mini*
 
-This Turborepo starter is maintained by the Turborepo core team.
+> A developer-focused monorepo teaching Redis integration through real backend services, shared UI packages, and practical Turborepo tooling.
 
-## Using this example
+---
 
-Run the following command:
+## At a Glance
 
-```sh
-npx create-turbo@latest
+| | |
+|---|---|
+| 🖥️ **Backend Apps** | 2 |
+| 🌐 **Frontend Apps** | 2 |
+| 📦 **Shared Packages** | 4 |
+| ⚡ **Redis Commands** | 5 |
+
+---
+
+## Why Redis?
+
+| Concept | What it means |
+|---|---|
+| 🚀 **In-memory speed** | Sub-millisecond reads and writes — ideal for caches, flags, and sessions |
+| 🔑 **Key/value simplicity** | Store banners, tokens, or config with a single `SET`. Retrieve instantly with `GET` |
+| 📊 **Health visibility** | `PING` lets services report Redis availability alongside their primary database |
+
+---
+
+## Apps in This Repo
+
+| App | Type | Stack | What it shows |
+|---|---|---|---|
+| `simple-start` | **Backend** | Express + ioredis + MongoDB | Redis health endpoint alongside a Mongo health endpoint — shows multi-DB integration patterns |
+| `site-banner` | **Backend** | Express + ioredis | Pure Redis demo — `SET`, `GET`, `DEL`, and `EXISTS` for a feature-store banner key |
+| `web` | **Frontend** | Next.js + packages/ui | How a front-end app consumes shared workspace components in a Redis-powered monorepo |
+| `docs` | **Frontend** | Next.js | Placeholder docs site — shows how multiple web apps coexist in one workspace |
+
+### Key Entry Points
+
+**`simple-start`**
+```
+apps/simple-start/src/app.ts
+apps/simple-start/src/config/app.config.ts
+apps/simple-start/src/server.ts
 ```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+**`site-banner`**
+```
+apps/site-banner/src/app.ts
+apps/site-banner/src/config/app.config.ts
+apps/site-banner/src/server.ts
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+## Shared Packages
+
+| Package | Purpose |
+|---|---|
+| `config` | Shared configuration utilities used across all apps |
+| `eslint-config` | Consistent linting rules for the entire workspace |
+| `typescript-config` | Unified TypeScript settings to keep types in sync |
+| `ui` | Shared React components consumed by `web` and `docs` |
+
+---
+
+## Redis Commands Used
+
+| Command | Purpose |
+|---|---|
+| `PING` | Health check — verify the server is alive |
+| `SET` | Store a value at a key |
+| `GET` | Read a value by key |
+| `DEL` | Remove a key entirely |
+| `EXISTS` | Check whether a key is present |
+
+---
+
+## Environment Configuration
+
+```env
+# .env — local development defaults
+
+PORT=5001
+REDIS_URL=redis://localhost:6379
+DATABASE_URL=mongodb://localhost:27017/redis-mini-db
+BANNER_KEY=app:banner
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## Getting Started
 
-```sh
-turbo build --filter=docs
+### Prerequisites
+
+- Node.js 18 or newer
+- pnpm
+- Redis running on `localhost:6379`
+- MongoDB *(optional — only needed for the `simple-start` Mongo health endpoint)*
+
+### Step-by-Step
+
+| Step | Command | Description |
+|---|---|---|
+| **01** Install | `pnpm install` | Install all workspace dependencies |
+| **02** Run a service | `pnpm dev --filter site-banner` | Run any single app in isolation via Turborepo filter |
+| **03** Run all | `pnpm dev` | Start all apps together (if workspace supports it) |
+| **04** Build | `pnpm build` | Compile all apps for production |
+
+---
+
+## Repo Architecture
+
+```
+redis-mini/
+├── apps/
+│   ├── simple-start/     # Express + ioredis + MongoDB health checks
+│   ├── site-banner/      # Express + ioredis banner store
+│   ├── web/              # Next.js frontend
+│   └── docs/             # Next.js docs site
+└── packages/
+    ├── config/           # Shared configuration
+    ├── eslint-config/    # Lint rules
+    ├── typescript-config/ # TypeScript settings
+    └── ui/               # Shared components
 ```
 
-Without global `turbo`:
+---
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+## How to Extend
 
-### Develop
+| Concept | Status | Description |
+|---|---|---|
+| **Caching** | ✅ Ready to add | Cache API responses with TTL-based expiry |
+| **Sessions** | ✅ Ready to add | Store and validate user sessions in Redis |
+| **Rate limiting** | ✅ Ready to add | Throttle requests using `INCR` + `EXPIRE` |
+| **Pub/Sub** | 🔜 Future | Pass messages between services in real time |
+| **Streams** | 🔜 Future | Build event-driven pipelines with Redis Streams |
+| **Hashes & Lists** | 🔜 Future | Model richer data with Redis data structures |
 
-To develop all apps and packages, run the following command:
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+## Project Notes
 
-```sh
-cd my-turborepo
-turbo dev
-```
+- `apps/simple-start` — best for learning Redis integration **alongside another database**
+- `apps/site-banner` — a **pure Redis demo** showing all core operations
+- `apps/web` and `apps/docs` — show how **frontend apps** can live in the same monorepo
+- `packages/*` — keep shared configuration **consistent** across all apps
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
+> Add new apps in `apps/`, shared helpers in `packages/`, and keep logic isolated per service.
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+**Happy learning!** 🟥

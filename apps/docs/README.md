@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# docs
 
-## Getting Started
+> A companion documentation site in the monorepo, designed to host learning content, examples, and internal docs.
 
-First, run the development server:
+---
+
+## What This App Is
+
+`docs` is a documentation-first Next.js app that lives alongside the repo’s main frontend and backend services.
+
+It is built for documentation, tutorials, or internal knowledge sharing with the same workspace packages.
+
+---
+
+## Why It Matters
+
+This app shows how a monorepo can host multiple independent frontend experiences while sharing design and config assets.
+
+Use it as a docs hub, product guide, or developer portal.
+
+---
+
+## Highlights
+
+| What it shows | Why it matters |
+|---|---|
+| Separate docs site | Keep documentation isolated from the main UI |
+| Shared package reuse | Use the same workspace components as `web` |
+| Fast preview | `pnpm dev --filter docs` |
+| Repo-friendly docs | Scale docs as the repo grows |
+
+---
+
+## App Structure
+
+- `app/page.tsx` — docs homepage content
+- `app/layout.tsx` — shared layout and metadata
+- `app/globals.css` — app-specific styling
+- `public/` — static assets and icons
+
+---
+
+## Run Locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev --filter docs
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3001` to preview the docs app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+## Commands
 
-## Learn More
+| Command | What it does |
+|---|---|
+| `pnpm dev --filter docs` | run the docs app locally |
+| `pnpm build --filter docs` | build the docs app for production |
+| `pnpm lint --filter docs` | lint the docs app |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `docs` is a lightweight documentation app that can be expanded into a full knowledge portal.
+- Use it to document backend services, Redis concepts, or monorepo architecture.
+- This app is intentionally simple so it can be customized quickly.
