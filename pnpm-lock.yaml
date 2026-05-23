@@ -86,6 +86,37 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
 
+  apps/queue-list:
+    dependencies:
+      '@repo/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
+      express:
+        specifier: ^5.2.1
+        version: 5.2.1
+      ioredis:
+        specifier: ^5.10.1
+        version: 5.10.1
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      '@types/express':
+        specifier: ^5.0.6
+        version: 5.0.6
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.15.3
+      tsx:
+        specifier: ^4.22.3
+        version: 4.22.3
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
   apps/simple-start:
     dependencies:
       '@repo/config':
