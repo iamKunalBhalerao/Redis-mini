@@ -1,0 +1,32 @@
+{
+  "name": "bullmq-queue",
+  "version": "1.0.0",
+  "description": "BullMQ Queue",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "tsx --watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [
+    "bullmq",
+    "queue",
+    "redis"
+  ],
+  "author": "kunalBhalerao",
+  "license": "MIT",
+  "dependencies": {
+    "@repo/config": "workspace:*",
+    "bullmq": "^5.77.2",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.15.3",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
+  }
+}
